@@ -60,8 +60,12 @@ export default class Boards extends NavigationMixin(LightningElement) {
         const fields = { ...event.detail.fields };
         let sectionControls = this.template.querySelectorAll('[data-section-control]');
         let sectionList = [];
+
         for (let control of sectionControls) {
-            sectionList.push({ Name: control.value });
+            sectionList.push({
+                Name: control.value,
+                Items_Backgroud_Theme__c: `${this.getRandomTheme()} slds-p-around_xx-small`
+            });
         }
 
         if (!this.validateData(fields, sectionList)) {
@@ -72,6 +76,11 @@ export default class Boards extends NavigationMixin(LightningElement) {
 
         this.popupCloseHandler();
         this.showToast('Data saved successfully');
+    }
+
+    getRandomTheme() {
+        let themes = ['slds-theme_alert-texture', 'slds-theme_warning', 'slds-theme_alt-inverse', 'slds-theme_inverse', 'slds-theme_shade'];
+        return themes[Math.floor(Math.random() * themes.length)];
     }
 
     validateData(fields, sectionList) {

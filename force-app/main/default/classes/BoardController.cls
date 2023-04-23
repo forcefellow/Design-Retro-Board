@@ -26,4 +26,22 @@ public with sharing class BoardController {
         throw new AuraHandledException(e.getMessage());
     }
    }
+
+   @AuraEnabled(cacheable=true)
+   public static List<Board_Section__c> getBoardDetails(String boardId){
+    try {
+        List<Board_Section__c>sections=[
+                    SELECT Id,Name,Items_Backgroud_Theme__c,//Items_Background_Theme__c,
+                    (
+                        SELECT Id,Name,Description__c,LikeCount__c
+                            FROM Board_Section_Items__r
+                    )
+                    FROM Board_Section__c
+                    WHERE Board__c=:boardId
+                ];
+        return sections;
+    } catch (Exception e) {
+        throw new AuraHandledException(e.getMessage());
+    }
+   }
 }

@@ -1,0 +1,14 @@
+.board-section{
+    min-height: 200px;
+}
+
+.board-section-item{
+    border: 1px solid #ddd;
+}
+
+.board-section-item-text{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    resize: none;
+}

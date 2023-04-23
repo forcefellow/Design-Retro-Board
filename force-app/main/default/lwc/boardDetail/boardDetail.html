@@ -1,0 +1,47 @@
+<template>
+    <lightning-card>
+        <lightning-layout multiple-rows>
+            <template for:each={sections} for:item="section">
+                <lightning-layout-item key={section.Id} size="3" class="board-section slds-border_right"
+                    padding="around-small">
+                    <lightning-layout class="slds-border_bottom slds-m-bottom_xx-small">
+                        <lightning-layout-item size="10">
+                            <div class="slds-text-heading_medium">{section.Name}</div>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="2" class="slds-text-align_right">
+                            <lightning-button-icon variant="brand" size="small" icon-name="utility:new"
+                                alternative-text="Add new item" onclick={addNewItemClickHandler}
+                                data-section-id={section.Id}></lightning-button-icon>
+                        </lightning-layout-item>
+                    </lightning-layout>
+
+                    <lightning-layout multiple-rows>
+                        <template for:each={section.Board_Section_Items__r} for:item="item">
+                            <lightning-layout-item key={item.Id} size="12"
+                                class="board-section-item slds-m-bottom_xx-small">
+                                <textarea class="board-section-item-text" onblur={updateItemDescriptionHandler}
+                                    data-section-item-id={item.Id}>{item.Description__c}</textarea>
+                                <lightning-layout class={section.Items_Backgroud_Theme__c}>
+                                    <lightning-layout-item size="6">
+                                        <lightning-button-icon variant="inverse" size="x-small" icon-name="utility:like"
+                                            alternative-text="Like Item" onclick={likeSectionItemHandler}
+                                            data-section-id={section.Id}
+                                            data-section-item-id={item.Id}></lightning-button-icon>
+
+                                        <span class="slds-m-left_small" title="Total Likes">{item.LikeCount__c}</span>
+                                    </lightning-layout-item>
+                                    <lightning-layout-item size="6" class="slds-text-align_right">
+                                        <lightning-button-icon variant="inverse" size="x-small"
+                                            icon-name="utility:delete" alternative-text="Delete Item"
+                                            onclick={deleteSectionItemHandler}
+                                            data-section-item-id={item.Id}></lightning-button-icon>
+                                    </lightning-layout-item>
+                                </lightning-layout>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </template>
+        </lightning-layout>
+    </lightning-card>
+</template>
